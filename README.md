@@ -42,3 +42,47 @@ Install dependencies as listed in `requirements.txt` needed for this app to run.
 That's it!
 
 ## Usage
+
+To print the command line help detailing available arguments for this application use the `-h` arg.
+
+    python dbmscmdterminal.py -h
+
+To list the available serial ports run the following command.
+
+    python dbmscmdterminal.py -l
+
+This will produce output similar to that below. Note: this will differ across platforms.
+
+    /dev/cu.Bluetooth-Incoming-Port
+    /dev/cu.locks-WirelessiAP
+    /dev/cu.SLAB_USBtoUART
+
+From the above list you will need to identify the serial port to which the DieBieMS is connected. In this case it's the `/dev/cu.SLAB_USBtoUART`, this serial port name needs to be included in all command executions.
+
+To send a terminal serial command on the DieBieMS run the following. The `-sp` arguement is the serial port identified in the previous step, and the argument following the `-c` arg is the terminal command to run.
+
+    python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -c hwinfo
+
+**Note:** terminal commands including spaces will need to be surrounded by quotation marks (eg; `-c "config_set_cells 12"`)
+
+Output:
+
+    -------    BMS Info   -------
+    Firmware: V0.11
+    Hardware: V0.5
+    Name    : DieBieMS
+    UUID: XX XX XX XX XX XX XX XX XX XX XX XX
+
+To see the full list of available DieBieMS terminal commands run the following (this is a DieBieMS generated help message).
+
+    python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -c help
+
+
+
+## Troubleshooting
+
+Check to make sure the USB cable is connected to both the PC and BMS ;-)
+
+If you have another application connected to the serial port (eg; VESC Tool) this application will not be able to make a connection. Either disconnect or close the other application.
+
+If you're unable to find the USB serial interface, or it fails to connect it may be due to missing USB drivers. I've had success with the ones from [here](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers).
