@@ -23,17 +23,21 @@ Clone the project
 
 Create a fresh python virtual environment making sure python 3 is used.
 
-    virtualenv -p python3 venv
+    virtualenv venv
 
 Activate the virtual environment (to deactivate later type `deactivate` at the cmd prompt). Note: this process differs for Linux/MacOS and Windows.
 
 Windows:
 
-    venv/bin/activate
+    venv\Scripts\activate
 
 Linux / MacOS:
 
     source venv/bin/activate
+
+Confirm python 3 is being used in the venv (output should report python v3.4+)
+
+    python --version
 
 Install dependencies as listed in `requirements.txt` needed for this app to run. As we've activated the virtualenv these will be installed into the venv folder (and not into your system python).
 
@@ -57,7 +61,7 @@ This will produce output similar to that below. Note: this will differ across pl
     /dev/cu.locks-WirelessiAP
     /dev/cu.SLAB_USBtoUART
 
-From the above list you will need to identify the serial port to which the DieBieMS is connected. In this case it's the `/dev/cu.SLAB_USBtoUART`, this serial port name needs to be included in all command executions.
+From the above list you will need to identify the serial port to which the DieBieMS is connected. In this case it's the `/dev/cu.SLAB_USBtoUART`, this serial port name needs to be included in all command executions. Refer to the troubleshooting section below if none of the listed serial ports seem like they belong to the BMS.
 
 To send a terminal serial command on the DieBieMS run the following. The `-sp` arguement is the serial port identified in the previous step, and the argument following the `-c` arg is the terminal command to run.
 
