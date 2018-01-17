@@ -3,11 +3,56 @@
 #
 
 import pyvesc
+import re
 import serial
 import time
 
 from dbmscommand.commands import GetTerminalPrint, SetTerminalCmd
 from dbmscommand.util import read_all
+
+# fields with names in this list will not have their values stripped of
+# non-numeric characters
+known_nonnumeric_fields = [
+    "Operational state",
+    "Discharge enabled",
+    "Charge enabled"
+]
+
+
+# Parses the DieBieMS text response format into a list of tuples.
+# Each tuple contains value label and value as strings
+def _parse_cellslikeresponse(responsestring):
+    lines = responsestring.splitlines()
+
+    nondecimal = re.compile(r'[^\d.]+')
+
+    cellsdata = []
+
+    for line in lines:
+        if line.startswith('---') and line.endswith('---'):
+            # then it's the header or footer
+            continue
+
+        labelandvalue = line.split(':')
+        label = labelandvalue[0].strip()
+        value = labelandvalue[1].strip()
+        if label not in known_nonnumeric_fields:
+            value = nondecimal.sub('', value) # remove the V char
+
+        cellsdata.append((label, value))
+
+    return cellsdata
+
+
+def get_cells(serialport):
+    response = run_command(serialport, "cells")
+    return _parse_cellslikeresponse(response)
+
+
+def get_status(serialport):
+    response = run_command(serialport, "status")
+    return _parse_cellslikeresponse(response)
+
 
 def run_command(serialport, command):
 
