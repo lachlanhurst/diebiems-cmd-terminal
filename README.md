@@ -81,6 +81,13 @@ To see the full list of available DieBieMS terminal commands run the following (
 
     python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -c help
 
+### Record mode
+Record mode differs a little to the other commands in that it does not return the command prompt until cancelled by the user (press ctrl-c to exit). During record mode the `cells` and `status` DieBieMS terminal commands are run periodically, the responses reformatted and written to a CSV file.
+
+To start record mode use the `-r` arg.
+
+    python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -r
+
 
 
 ## Troubleshooting
