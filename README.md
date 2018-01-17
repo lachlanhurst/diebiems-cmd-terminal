@@ -94,6 +94,8 @@ To start record mode use the `-r` arg.
 
     python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -r
 
+Some of the available outputs were used in the following chart.
+![battery discharge chart, volts and percentage charge remaining](doc/screenshots/2018-01-17-21-09-09_status.png)
 
 ## Troubleshooting
 
