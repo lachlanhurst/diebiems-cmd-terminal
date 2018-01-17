@@ -57,17 +57,21 @@ To list the available serial ports run the following command.
 
 This will produce output similar to that below. Note: this will differ across platforms.
 
+MacOS eg;
+
     /dev/cu.Bluetooth-Incoming-Port
     /dev/cu.locks-WirelessiAP
     /dev/cu.SLAB_USBtoUART
+
+Windows eg;
+
+    COM3
 
 From the above list you will need to identify the serial port to which the DieBieMS is connected. In this case it's the `/dev/cu.SLAB_USBtoUART`, this serial port name needs to be included in all command executions. Refer to the troubleshooting section below if none of the listed serial ports seem like they belong to the BMS.
 
 To send a terminal serial command on the DieBieMS run the following. The `-sp` arguement is the serial port identified in the previous step, and the argument following the `-c` arg is the terminal command to run.
 
     python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -c hwinfo
-
-**Note:** terminal commands including spaces will need to be surrounded by quotation marks (eg; `-c "config_set_cells 12"`)
 
 Output:
 
@@ -81,13 +85,14 @@ To see the full list of available DieBieMS terminal commands run the following (
 
     python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -c help
 
+**Note:** terminal commands including spaces will need to be surrounded by quotation marks (eg; `-c "config_set_cells 12"`)
+
 ### Record mode
 Record mode differs a little to the other commands in that it does not return the command prompt until cancelled by the user (press ctrl-c to exit). During record mode the `cells` and `status` DieBieMS terminal commands are run periodically, the responses reformatted and written to a CSV file.
 
 To start record mode use the `-r` arg.
 
     python dbmscmdterminal.py -sp /dev/cu.SLAB_USBtoUART -r
-
 
 
 ## Troubleshooting
